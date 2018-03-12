@@ -16,7 +16,7 @@ import cn.eaglec.util.PropertiesUtils;
 public class BaseController {
 	protected final Logger logger = Logger.getLogger(this.getClass());
 
-	/* 全局异常处理 */
+	/* 全局异常处理  */
 	@ExceptionHandler
 	public void exp(HttpServletRequest request, HttpServletResponse response,
 			Exception ex) {

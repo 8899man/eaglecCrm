@@ -41,7 +41,7 @@ public class CustomerController extends BaseController {
 	}
 	/**
 	 * 进入登录页面
-	 * 
+	 * 3
 	 * @param resourceId
 	 * @param model
 	 */
@@ -69,7 +69,7 @@ public class CustomerController extends BaseController {
 		model.addAttribute("userId", userId);
 		model.addAttribute("userName", userName);
 		model.addAttribute("userId", "ifnoMEMEDA");
-		//SessionService.getInstance().save("123","123");
+		SessionService.getInstance().save("123","123");
 		return "/client/index";
 	}
 	

@@ -41,7 +41,7 @@ public class CustomerController extends BaseController {
 	}
 	/**
 	 * 进入登录页面
-	 * 3
+	 * 
 	 * @param resourceId
 	 * @param model
 	 */

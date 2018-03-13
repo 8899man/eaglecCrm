@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+	  http://www.springframework.org/schema/beans/spring-beans.xsd  
+	  http://www.springframework.org/schema/context  
+	  http://www.springframework.org/schema/context/spring-context.xsd
+	  http://www.springframework.org/schema/mvc  
+	  http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 注解扫描包 -->
+	<context:component-scan base-package="cn.eaglec.controller" />
+	<!-- 开启mvc注解 -->
+	<mvc:annotation-driven>  
+    <mvc:message-converters register-defaults="true">  
+        <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->  
+        <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">  
+            <property name="supportedMediaTypes">  
+                <list>  
+                    <value>application/json;charset=UTF-8</value>  
+                </list>  
+            </property>  
+        </bean>  
+    </mvc:message-converters>  
+</mvc:annotation-driven>  
+	<!-- 对静态资源的请求 -->
+   <mvc:resources location="/resources/" mapping="/resources/**"/>
+	<!-- 视图解析器(只需要配置一个就可以了)： 从逻辑视图到真正视图的映射 -->
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"> <!-- url视图解析器 -->
+		<!-- 一般基于jsp技术实现的时候，都会帮jsp隐藏起来。
+		 将jsp放在WEB-INF下面，直接访问jsp发现找不到， 避免直接访问jsp页面。 -->
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<mvc:interceptors>  
+        <mvc:interceptor>  
+            <!--设置拦截的路径-->  
+            <mvc:mapping path="/**" />  
+            <bean class="cn.eaglec.filter.SpringUrlFilter">  
+            </bean>  
+        </mvc:interceptor>  
+    </mvc:interceptors>  
+	<!--
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	-->
+	<!-- 上传文件拦截，设置最大上传文件大小   100M=100*1024*1024(B)=104857600 bytes -->  
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+	    <property name="maxUploadSize" value="104857600" />  
+	</bean>
+</beans>

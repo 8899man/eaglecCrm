@@ -17,6 +17,8 @@ import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
+import cn.eaglec.service.InitSystemService;
+import cn.eaglec.util.ApplicationUtil;
 import cn.eaglec.util.ExceptionUtil;
 import cn.eaglec.util.FileListenerUtil;
 import cn.eaglec.util.FileTool;
@@ -37,6 +39,8 @@ public class ConfigLoadListener implements ServletContextListener {
 	
 	static {
 		try {
+			//初始化系统
+			initSystem();
 			properties = new Properties();
 			config = new Properties();
 			properties.load(Thread.currentThread().getContextClassLoader()
@@ -231,4 +235,20 @@ public class ConfigLoadListener implements ServletContextListener {
 	}
 
 
+	
+	/*
+	 * 初始化系统
+	 */
+	private void initSystem()
+	{
+		try {
+			InitSystemService initService = (InitSystemService) ApplicationUtil
+					.getApplicationContext().getBean("initService");
+			initService.initSystem();
+		} catch (Exception ex) {
+			logger.error("initSystem方法执行发生错误：" + "\n"
+					+ ExceptionUtil.getStackMsg(ex));
+		}
+	}
+	
 }

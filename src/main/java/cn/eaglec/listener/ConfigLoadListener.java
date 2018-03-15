@@ -239,7 +239,7 @@ public class ConfigLoadListener implements ServletContextListener {
 	/*
 	 * 初始化系统
 	 */
-	private void initSystem()
+	private static void initSystem()
 	{
 		try {
 			InitSystemService initService = (InitSystemService) ApplicationUtil

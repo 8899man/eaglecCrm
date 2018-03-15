@@ -17,17 +17,17 @@
 	</bean>
 	<!-- 对象池配置 -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-		<property name="maxActive" value="${redis.pool.maxActive}"/>
-		<property name="maxIdle" value="${redis.pool.maxIdle}"/>
-		<property name="maxWait" value="${redis.pool.maxWait}"/>
-		<property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>
+		<property name="maxActive" value="1024"/>
+		<property name="maxIdle" value="200"/>
+		<property name="maxWait" value="1000"/>
+		<property name="testOnBorrow" value="true"/>
 	</bean>
 	<!-- 配置jedisConnFactory -->
 	<bean id="jedisConnFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-		<property name="hostName" value="${redis.ip}"/>
-		<property name="port" value="${redis.port}"/>
-		<property name="database" value="${redis.database}"/>
+		<property name="hostName" value="10.44.219.200"/>
+		<property name="port" value="6379"/>
+		<property name="database" value="0"/>
 		<property name="poolConfig" ref="jedisPoolConfig"/>
 	</bean>
 

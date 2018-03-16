@@ -139,6 +139,10 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<!-- sys-监听器 -->
+	<listener>
+	    <listener-class>cn.eaglec.listener.SysListener</listener-class>
+	</listener>
     <!-- 配置错误页面 -->
 	<error-page>
 		<error-code>404</error-code>

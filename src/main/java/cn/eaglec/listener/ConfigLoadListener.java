@@ -22,6 +22,7 @@ import cn.eaglec.util.ApplicationUtil;
 import cn.eaglec.util.ExceptionUtil;
 import cn.eaglec.util.FileListenerUtil;
 import cn.eaglec.util.FileTool;
+import cn.eaglec.util.MongoDBUtils;
 import cn.eaglec.util.PropertiesUtils;
 
 
@@ -41,6 +42,8 @@ public class ConfigLoadListener implements ServletContextListener {
 		try {
 			//初始化系统
 			initSystem();
+			//启动monogDB
+			startMongoDb();
 			properties = new Properties();
 			config = new Properties();
 			properties.load(Thread.currentThread().getContextClassLoader()
@@ -250,5 +253,13 @@ public class ConfigLoadListener implements ServletContextListener {
 					+ ExceptionUtil.getStackMsg(ex));
 		}
 	}
-	
+	private static void startMongoDb(){
+		String host = PropertiesUtils.getProperty("mongodb.host");
+		int port = Integer.parseInt(PropertiesUtils.getProperty("mongodb.port","27017"));
+		String dbname = PropertiesUtils.getProperty("mongodb.dbname");
+		String userName = PropertiesUtils.getProperty("mongodb.username");
+		String password = PropertiesUtils.getProperty("mongodb.password");
+		MongoDBUtils.connectMongoDB(host, port, dbname,userName,password);
+		MongoDBUtils.createIndex(MongoDBConst.COLLECTION_HISTORY_TD_RUN_DATA);
+	}
 }

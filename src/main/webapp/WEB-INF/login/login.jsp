@@ -76,7 +76,8 @@
                       return;
                   }
                   $('#loginText').html("登录成功，正在跳转...");
-                  var jumpUrl = '/eaglecCrm/sys/customerInfoList?userId='+data.userId+'&userName='+data.userName;  //跳转到列表页
+                  var jumpUrl = '/eaglecCrm/sys/customerInfoList';  //跳转到列表页
+                  //var jumpUrl = '/eaglecCrm/sys/customerInfoList?userId='+data.userId+'&userName='+data.userName;  //跳转到列表页
                   window.location.href = jumpUrl;
                 
               },

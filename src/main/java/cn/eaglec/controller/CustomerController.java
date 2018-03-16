@@ -48,10 +48,6 @@ public class CustomerController extends BaseController {
 	@RequestMapping(value="/sys/userLogin",method = RequestMethod.GET)
 	public String userLogin(Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		//model.addAttribute("userId", "ifno");
-		//SessionService.getInstance().save("crm","nihao");
-		//Webutil.setAttribute("crm","nihao");
-		//String nihao = (String)SessionService.getInstance().get("crm");
 		
 		return "/login/login";
 	}
@@ -64,12 +60,14 @@ public class CustomerController extends BaseController {
 	@RequestMapping(value="/sys/customerInfoList",method = RequestMethod.GET)
 	public String apkVersionList(Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		String userId = request.getParameter("userId");
-		String userName = request.getParameter("userName");
+		User userInfo = (User) SessionService.getInstance().get(request.getSession().getId());
+		if(userInfo == null){
+			return null;
+		}
+		String userId = userInfo.getId();
+		String userName = userInfo.getUserName();
 		model.addAttribute("userId", userId);
 		model.addAttribute("userName", userName);
-		model.addAttribute("userId", "ifnoMEMEDA");
-		SessionService.getInstance().save("123","123");
 		return "/client/index";
 	}
 	
@@ -82,8 +80,12 @@ public class CustomerController extends BaseController {
 	@RequestMapping(value="/sys/userList",method = RequestMethod.GET)
 	public String userList(Model model, HttpServletRequest request,
 			HttpServletResponse response) {
-		String userId = request.getParameter("userId");
-		String userName = request.getParameter("userName");
+		User userInfo = (User) SessionService.getInstance().get(request.getSession().getId());
+		if(userInfo == null){
+			return null;
+		}
+		String userId = userInfo.getId();
+		String userName = userInfo.getUserName();
 		model.addAttribute("userId", "userId");
 		model.addAttribute("userName", userName);
 		return "/client/userList";
@@ -135,6 +137,9 @@ public class CustomerController extends BaseController {
 			json.setMsg("登录成功");
 			json.setUserId(userInfo.getId());
 			json.setUserName(userInfo.getUserName());
+			//将登陆信息放在redis里面进行保存
+			String sessionId = request.getSession().getId();
+			SessionService.getInstance().save(sessionId,userInfo);
 		}
 		BaseResult.writeJson(request, response, json);
 		return;

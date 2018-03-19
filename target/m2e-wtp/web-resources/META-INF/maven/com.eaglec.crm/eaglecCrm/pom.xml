@@ -1,0 +1,390 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.eaglec.crm</groupId>
+  <artifactId>eaglecCrm</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>eaglecCrm</name>
+  <url>http://maven.apache.org</url>
+ <properties>
+	
+		<iotas-commons>0.0.1-SNAPSHOT</iotas-commons>
+		<airc-business-commons>1.0.1-SNAPSHOT</airc-business-commons>
+		<iotas-util>V00B03-0002</iotas-util>
+		
+		<iotgp-sdk>1.0.48</iotgp-sdk>
+		<jdk.verison>1.7</jdk.verison>
+		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>4.0.3.RELEASE</spring.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
+		<mysql.connector.version>5.1.30</mysql.connector.version>
+		<net.sourceforge.jtds.version>1.3.1</net.sourceforge.jtds.version>
+		<junit.version>4.11</junit.version>
+		<com.alibaba.druid.version>1.0.0</com.alibaba.druid.version>
+		<org.aspectj.aspectjweaver.verison>1.7.4</org.aspectj.aspectjweaver.verison>
+		<com.alibaba.fastjson.verison>1.1.37</com.alibaba.fastjson.verison>
+		<slf4j.log4j12.verison>1.7.5</slf4j.log4j12.verison>
+		<dom4j.version>1.6.1</dom4j.version>
+		<jaxen.version>1.1.4</jaxen.version>
+		<jstl.version>1.2</jstl.version>
+		<jsp.api.version>2.2.1-b03</jsp.api.version>
+		<servlet.api.version>2.5</servlet.api.version>
+		<commons.io.version>2.4</commons.io.version>
+		<apache.poi.verison>3.9</apache.poi.verison>
+		<commons.dbutils.verison>1.5</commons.dbutils.verison>
+		<bull.javamelody.core.verison>1.47.0</bull.javamelody.core.verison>
+		<apache.xmlgraphics.batik.codec.verison>1.7</apache.xmlgraphics.batik.codec.verison>
+		<apache.cxf.version>2.7.7</apache.cxf.version>
+		<opensymphony.quartz.version>1.6.1</opensymphony.quartz.version>
+		<sf.ehcache.verison>2.7.4</sf.ehcache.verison>
+		<spring.data.redis.verison>1.1.1.RELEASE</spring.data.redis.verison>
+		<codehaus.jackson.version>1.9.13</codehaus.jackson.version>
+		<commons.lang3.version>3.3.1</commons.lang3.version>
+		<mina-core.version>2.0.7</mina-core.version>
+		<spring-data-redis.version>1.1.1.RELEASE</spring-data-redis.version>
+		<jedis.version>2.1.0</jedis.version>
+		<commons.fileupload.version>1.3</commons.fileupload.version>
+		<usecase.version>V00B02</usecase.version>
+		<revision>SNAPSHOT</revision>
+		<mongodb.version>2.11.4</mongodb.version>
+	</properties>
+	<distributionManagement>
+		<site>
+			<!-- this needs to match a server in your settings.xml with upload settings -->
+			<id>activesshe-website</id>
+			<!-- set the staging.siteURL in your ~/.m2/settings.xml in a release or 
+				other profile -->
+			<url>${staging.siteURL}/maven/${project.version}</url>
+			<!--<url>${site-repo-url}</url> -->
+		</site>
+		<repository>
+			<id>releases</id>
+			<url>http://10.44.219.132:8081/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://10.44.219.132:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<!-- 发布jar -->
+	<!-- oschina的maven仓库 -->
+	<repositories>
+		<!-- 私有仓库 <repository> <id>inovance-cn</id> <url>http://192.168.50.79:8081/nexus/content/groups/public</url> 
+			<releases> <enabled>true</enabled> </releases> <snapshots> <enabled>true</enabled> 
+			</snapshots> </repository> -->
+		<repository>
+			<id>oschinaRepository</id>
+			<name>local private nexus</name>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<!-- 指定maven plugin仓库 -->
+	<pluginRepositories>
+		<!-- 私有仓库 <pluginRepository> <id>inovance-cn</id> <url>http://192.168.50.79:8081/nexus/content/groups/public</url> 
+			<releases> <enabled>true</enabled> </releases> <snapshots> <enabled>true</enabled> 
+			</snapshots> </pluginRepository> -->
+		<!-- oschina的maven plugin仓库 -->
+		<pluginRepository>
+			<id>oschinaPluginRepository</id>
+			<name>local private nexus</name>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	<dependencies>
+	
+	<!-- 	<dependency>
+		    <groupId>cn.inovance</groupId>
+		    <artifactId>airc-business-commons</artifactId>
+		    <version>${airc-business-commons}</version>
+		</dependency>  -->
+			
+		<!-- 加入mysql驱动依赖包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
+		<!-- 加入fileupload依赖包 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons.fileupload.version}</version>
+		</dependency>
+		<!-- websocket -->
+		<dependency>
+		  <groupId>javax</groupId>
+		  <artifactId>javaee-api</artifactId>
+		  <version>7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang3.version}</version>
+		</dependency>
+		<!-- 加入druid数据源依赖包 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${com.alibaba.druid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj.aspectjweaver.verison}</version>
+		</dependency>
+		<!-- 加入slf4j依赖包 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.log4j12.verison}</version>
+		</dependency>
+
+		<!-- 加入dom4j依赖包 -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>${dom4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>${jaxen.version}</version>
+		</dependency>
+
+		<!-- 加入jstl依赖包 -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+		
+
+		<!-- io包 -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons.io.version}</version>
+		</dependency>
+
+		<!-- 加入POI核心依赖 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${apache.poi.verison}</version>
+		</dependency>
+		<!-- 为POI支持Office Open XML -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${apache.poi.verison}</version>
+		</dependency>
+		<!-- 支持Word文档的操作 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>${apache.poi.verison}</version>
+		</dependency>
+
+		<!-- dbutils依赖包 -->
+		<dependency>
+			<groupId>commons-dbutils</groupId>
+			<artifactId>commons-dbutils</artifactId>
+			<version>${commons.dbutils.verison}</version>
+		</dependency>
+
+		<!-- 加入javamelody依赖包 -->
+		<dependency>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-core</artifactId>
+			<version>${bull.javamelody.core.verison}</version>
+		</dependency>
+
+		<!-- 加入batik依赖包，用于highcharts导出图表 -->
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>batik-codec</artifactId>
+			<version>${apache.xmlgraphics.batik.codec.verison}</version>
+		</dependency>
+		<!-- 加入quartz依赖包 -->
+		<dependency>
+			<groupId>org.opensymphony.quartz</groupId>
+			<artifactId>quartz-all</artifactId>
+			<version>${opensymphony.quartz.version}</version>
+		</dependency>
+
+		<!-- 加入spring mvc依赖包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- 加入orm依赖包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- 加入spring测试依赖包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- ehcache需要的依赖 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- 加入hibernate依赖包 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<!-- 加入spring data redis依赖包 -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>${spring-data-redis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
+		</dependency>
+		<!-- 加入httpClient -->
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- 加入二维码生成工具 -->
+		<dependency>
+		    <groupId>zxing</groupId>
+		    <artifactId>core</artifactId>
+		    <version>3.1.0</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>zxing</groupId>
+		  <artifactId>javase</artifactId>
+		  <version>3.1.0</version>
+		</dependency>
+		<!-- 加入db依赖 -->
+		<!-- <dependency>
+			<groupId>cn.inovance</groupId>
+			<artifactId>iotas-commons</artifactId>
+			<version>${iotas-commons}</version>
+		</dependency> -->
+		<!-- 加入fastjson依赖包 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${com.alibaba.fastjson.verison}</version>
+		</dependency>
+		
+		<!-- 加入ehcache -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>${sf.ehcache.verison}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.mina</groupId>
+			<artifactId>mina-core</artifactId>
+			<version>${mina-core.version}</version>
+		</dependency>
+		<!-- 添加MongoDB数据库驱动包 -->
+		<dependency>
+	        <groupId>org.mongodb</groupId>
+	        <artifactId>mongo-java-driver</artifactId>
+	        <version>${mongodb.version}</version>
+    	</dependency>
+		<!-- 加入本地tools.jar -->
+		<dependency>
+			<groupId>sun.jdk</groupId>
+			<artifactId>tools</artifactId>
+			<version>${jdk.verison}</version>
+			<scope>system</scope>
+			<systemPath>${java.home}//..//lib//tools.jar</systemPath>
+		</dependency>
+		<dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+ 
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- activemq -->
+   	 <dependency>
+      	<groupId>org.apache.activemq</groupId>
+     	 <artifactId>activemq-core</artifactId>
+     	 <version>5.7.0</version>
+    </dependency>
+    <dependency>
+    	  <groupId>org.apache.activemq</groupId>
+    	  <artifactId>activemq-pool</artifactId>
+    	  <version>5.12.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jms</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xbean</groupId>
+      <artifactId>xbean-spring</artifactId>
+      <version>3.16</version>
+    </dependency>
+		
+	</dependencies>
+  <build>
+    <finalName>eaglecCrm</finalName>
+    <plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${jdk.verison}</source>
+					<target>${jdk.verison}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<!-- 编译war包 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<version>2.4</version>
+				</configuration>
+			</plugin>
+		</plugins>
+  </build>
+</project>

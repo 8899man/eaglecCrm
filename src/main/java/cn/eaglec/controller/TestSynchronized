@@ -1,0 +1,62 @@
+package cn.eaglec.controller;
+
+//synchronize锁方法和锁对象
+public class TestSynchronized {
+	public void test1(){
+		//synchronized锁代码块
+		synchronized(this){
+			int i =5;
+			while(i-- > 0){
+				System.out.println(Thread.currentThread().getName() + " :"+i);
+				try{
+					Thread.sleep(500);
+				}catch(InterruptedException ie){
+					
+				}
+			}
+		}
+	}
+	//synchronized锁方法
+	public synchronized void test2(){
+
+		int i =5;
+		while(i-- > 0){
+			System.out.println(Thread.currentThread().getName() + " :"+i);
+			try{
+				Thread.sleep(500);
+			}catch(InterruptedException ie){
+				
+			}
+		}
+	
+	}
+
+	public static void main(String[] args){
+		 final TestSynchronized myt2 = new TestSynchronized();    
+        /* Thread test1 = new Thread(  new Runnable() {  public void run() {  myt2.test1();  }  }, "test1"  );    
+         Thread test2 = new Thread(  new Runnable() {  public void run() { myt2.test2();   }  }, "test2"  );    
+         test1.start();;    
+         test2.start();    */
+		 //锁代码块
+		 /*Thread test1 = new Thread(  new Runnable() {  public void run() {  myt2.test1();  }  }, "test1"  );    
+         Thread test2 = new Thread(  new Runnable() {  public void run() { myt2.test1();   }  }, "test2"  );    
+         test1.start();;    
+         test2.start();    */
+		 Thread test1 = new Thread(  new Runnable() {  public void run() {  myt2.test1();  }  }, "test1"  );    
+         Thread test2 = new Thread(  new Runnable() {  public void run() { myt2.test2();   }  }, "test2"  );  
+         //Thread test3 = new Thread(  new Runnable() {  public void run() {  myt2.test2();  }  }, "test3"  );    
+         //Thread test4 = new Thread(  new Runnable() {  public void run() { myt2.test2();   }  }, "test4"  );  
+         //Thread test5 = new Thread(  new Runnable() {  public void run() {  myt2.test2();  }  }, "test5"  );    
+         //Thread test6 = new Thread(  new Runnable() {  public void run() { myt2.test2();   }  }, "test6"  );  
+         //Thread test7 = new Thread(  new Runnable() {  public void run() {  myt2.test2();  }  }, "test7"  );    
+         //Thread test8 = new Thread(  new Runnable() {  public void run() { myt2.test2();   }  }, "test8"  );  
+         test1.start();   
+         test2.start();  
+         //test3.start();
+         //test4.start();
+         //test5.start();
+         //test6.start();
+         //test7.start();
+         //test8.start();
+	}
+}
